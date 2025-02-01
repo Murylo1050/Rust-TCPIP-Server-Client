@@ -12,7 +12,7 @@ fn handle_client(mut stream: TcpStream) {
             }
             Ok(size) => {
                 let mensagem = String::from_utf8_lossy(&buffer[..size]);
-                println!("{}: de {}", stream.peer_addr().unwrap(), mensagem.trim());
+                println!("{}: {}", stream.peer_addr().unwrap(), mensagem.trim());
 
                 // Enviar resposta ao cliente
                 if let Err(e) = stream.write_all(b"Mensagem recebida") {
@@ -29,8 +29,8 @@ fn handle_client(mut stream: TcpStream) {
 }
 
 fn main() -> std::io::Result<()> {
-    let listener = TcpListener::bind("127.0.0.1:8080")?;
-    println!("Servidor rodando em 127.0.0.1:8080");
+    let listener = TcpListener::bind("0.0.0.0:8080")?;
+    println!("Servidor rodando em 0.0.0.0:8080");
 
     for stream in listener.incoming() {
         match stream {
