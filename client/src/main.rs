@@ -29,7 +29,7 @@ fn message_thread(mut stream: TcpStream) {
 
 fn main() -> std::io::Result<()> {
     let mut stream = TcpStream::connect("127.0.0.1:25003")?;
-    let mut stream_clone = stream.try_clone()?; // Clonamos para poder usar em outra thread
+    let stream_clone = stream.try_clone()?; // Clonamos para poder usar em outra thread
 
     println!("Digite o nome de usuário:");
     let mut username = String::new();
@@ -57,4 +57,3 @@ fn main() -> std::io::Result<()> {
 
     Ok(())
 }
-
