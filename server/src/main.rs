@@ -39,8 +39,8 @@ fn handle_client(mut stream: TcpStream, clients: Arc<Mutex<Vec<TcpStream>>>) {
 }
 
 fn main() -> std::io::Result<()> {
-    let listener = TcpListener::bind("127.0.0.1:25003")?;
-    println!("Servidor rodando em 127.0.0.1:25003");
+    let listener = TcpListener::bind("0.0.0.0:25567")?;
+    println!("Servidor rodando em 0.0.0.0:25567");
 
     let clients = Arc::new(Mutex::new(Vec::new()));
 
@@ -62,4 +62,3 @@ fn main() -> std::io::Result<()> {
 
     Ok(())
 }
-
