@@ -3,7 +3,7 @@ use std::io::{Read, Write};
 use std::net::TcpStream;
 use std::thread;
 
-fn message_thread(mut stream: TcpStream) {
+fn message_thread(mut stream: TcpStream, username: String) {
     loop {
         let mut buffer = [0; 512];
         match stream.read(&mut buffer) {
@@ -16,6 +16,9 @@ fn message_thread(mut stream: TcpStream) {
                 let decode: Vec<&str> = mensagem.split("\n").collect();
 
                 if decode.len() >= 2 {
+                    if (username != decode[0]) {
+                        println!("\x07");
+                    }
                     println!("{}: {}", decode[0], decode[1]);
                 }
             }
@@ -37,9 +40,10 @@ fn main() -> std::io::Result<()> {
         .read_line(&mut username)
         .expect("Esperado user name!");
     let username = username.trim().to_string(); // Remover espaços extras e "\n"
+    let thread_username = username.clone();
 
     // Criar a thread corretamente
-    thread::spawn(move || message_thread(stream_clone));
+    thread::spawn(move || message_thread(stream_clone, thread_username));
 
     loop {
         let mut input = String::new();
